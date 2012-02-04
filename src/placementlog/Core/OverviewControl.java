@@ -8,7 +8,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 public class OverviewControl {
-
     
     public DefaultMutableTreeNode addObject(String child, JTree tree, DefaultMutableTreeNode rootNode, DefaultTreeModel treeModel) {
         DefaultMutableTreeNode parentNode = null;

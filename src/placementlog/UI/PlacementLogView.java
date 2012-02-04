@@ -1,9 +1,9 @@
 package PlacementLog.UI;
 
 import Placementlog.Core.OverviewControl;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import Placementlog.UI.TabPanel;
 import java.awt.GridLayout;
+import java.text.DateFormat;
 import java.util.Date;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.SingleFrameApplication;
@@ -38,7 +38,6 @@ public class PlacementLogView extends FrameView {
         jpTreeView.setLayout(new GridLayout(1,1));
         jpTreeView.add(tree);
         jpTreeView.setSize(239, 508);
-        
     }
 
     @Action
@@ -206,7 +205,8 @@ public class PlacementLogView extends FrameView {
     }// </editor-fold>//GEN-END:initComponents
 
 private void btnAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewActionPerformed
-    
+    String df = DateFormat.getDateInstance().format(new Date());
+    tpView.add(df, new TabPanel(df));
     ovc.addObject(new Date().toString(), tree, rootNode, treeModel);
     
 }//GEN-LAST:event_btnAddNewActionPerformed
