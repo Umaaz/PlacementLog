@@ -1,8 +1,11 @@
 package Placementlog.Core;
 
+import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
+
 public class ApplicationLoader {
-    public static void load()
+    public static ArrayList<DefaultMutableTreeNode> load()
     {
-        //TODO load from xml files  
+        return null;
     } 
 }

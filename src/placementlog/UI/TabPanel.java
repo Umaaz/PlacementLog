@@ -1,26 +1,27 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * TabPanel.java
- *
- * Created on Feb 3, 2012, 4:16:42 PM
- */
 package Placementlog.UI;
 
-/**
- *
- * @author Ben
- */
+import java.util.Date;
+import placementlog.Core.Types.Entry;
+
 public class TabPanel extends javax.swing.JPanel {
 
     /** Creates new form TabPanel */
+    public TabPanel(Entry e) {
+        initComponents();
+        txtDate.setText(e.getDate().toString());
+        txtDate.setEditable(false);
+        txtSubject.setText(e.getSubject());
+        txtABody.setText(e.getEntry());
+    }
+    
     public TabPanel(String date) {
         initComponents();
         txtDate.setText(date);
         txtDate.setEditable(false);
+    }
+    
+    public Entry getEntry() {
+        return new Entry(txtDate.getText(),new Date(txtSubject.getText()), txtABody.getText());
     }
 
     /** This method is called from within the constructor to

@@ -2,6 +2,7 @@
 package Placementlog.Core;
 //class to control the behaviour of the treeview 'tvOverview'
 
+import java.util.ArrayList;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -28,5 +29,11 @@ public class OverviewControl {
             tree.scrollPathToVisible(new TreePath(childNode.getPath()));
         }
         return childNode;
+    }
+    
+    
+    
+    public void orderByDate(JTree tree, ArrayList<DefaultMutableTreeNode> nodes) {
+        
     }
 }

@@ -1,19 +1,23 @@
 package PlacementLog.UI;
 
+import Placementlog.Core.ApplicationLoader;
 import Placementlog.Core.OverviewControl;
 import Placementlog.UI.TabPanel;
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.SingleFrameApplication;
 import org.jdesktop.application.FrameView;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
+import placementlog.Core.Types.Entry;
 
 /**
  * The application's main frame.
@@ -22,12 +26,19 @@ public class PlacementLogView extends FrameView {
 
     private OverviewControl ovc = new OverviewControl();
     private DefaultMutableTreeNode rootNode;
+    private ArrayList<DefaultMutableTreeNode> monthNodes = new ArrayList<DefaultMutableTreeNode>();
+    private ArrayList<DefaultMutableTreeNode> nodes = new ArrayList<DefaultMutableTreeNode>();
+    private ArrayList<Entry> entries = new ArrayList<Entry>();
     private DefaultTreeModel treeModel;
+    
     private JTree tree;
+    private JTabbedPane jtView;
     
     public PlacementLogView(SingleFrameApplication app) {
         super(app);
         initComponents();
+        buildMonthList();
+        nodes = ApplicationLoader.load();
         rootNode = new DefaultMutableTreeNode("Entries");
         treeModel = new DefaultTreeModel(rootNode);
         tree = new JTree(treeModel);
@@ -35,9 +46,25 @@ public class PlacementLogView extends FrameView {
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         tree.setShowsRootHandles(true);
         tree.setSize(239, 508);
-        jpTreeView.setLayout(new GridLayout(1,1));
-        jpTreeView.add(tree);
-        jpTreeView.setSize(239, 508);
+        jtView = new JTabbedPane();
+        bodyPanel.setLayout(new BorderLayout());
+        bodyPanel.add("West",tree);
+        bodyPanel.add("Center",jtView);
+    }
+    
+    private void buildMonthList() {
+        monthNodes.add(new DefaultMutableTreeNode("January"));
+        monthNodes.add(new DefaultMutableTreeNode("Febuary"));
+        monthNodes.add(new DefaultMutableTreeNode("March"));
+        monthNodes.add(new DefaultMutableTreeNode("April"));
+        monthNodes.add(new DefaultMutableTreeNode("May"));
+        monthNodes.add(new DefaultMutableTreeNode("June"));
+        monthNodes.add(new DefaultMutableTreeNode("July"));
+        monthNodes.add(new DefaultMutableTreeNode("August"));
+        monthNodes.add(new DefaultMutableTreeNode("September"));
+        monthNodes.add(new DefaultMutableTreeNode("October"));
+        monthNodes.add(new DefaultMutableTreeNode("November"));
+        monthNodes.add(new DefaultMutableTreeNode("December"));
     }
 
     @Action
@@ -67,9 +94,9 @@ public class PlacementLogView extends FrameView {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        jpTreeView = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        tpView = new javax.swing.JTabbedPane();
+        btnOrderByDate = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        bodyPanel = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -125,33 +152,36 @@ public class PlacementLogView extends FrameView {
         jSeparator2.setName("jSeparator2"); // NOI18N
         jToolBar1.add(jSeparator2);
 
-        jpTreeView.setMinimumSize(new java.awt.Dimension(239, 508));
-        jpTreeView.setName("jpTreeView"); // NOI18N
+        btnOrderByDate.setText(resourceMap.getString("btnOrderByDate.text")); // NOI18N
+        btnOrderByDate.setFocusable(false);
+        btnOrderByDate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnOrderByDate.setName("btnOrderByDate"); // NOI18N
+        btnOrderByDate.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnOrderByDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrderByDateActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnOrderByDate);
 
-        javax.swing.GroupLayout jpTreeViewLayout = new javax.swing.GroupLayout(jpTreeView);
-        jpTreeView.setLayout(jpTreeViewLayout);
-        jpTreeViewLayout.setHorizontalGroup(
-            jpTreeViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 239, Short.MAX_VALUE)
+        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setName("jButton5"); // NOI18N
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton5);
+
+        bodyPanel.setName("bodyPanel"); // NOI18N
+
+        javax.swing.GroupLayout bodyPanelLayout = new javax.swing.GroupLayout(bodyPanel);
+        bodyPanel.setLayout(bodyPanelLayout);
+        bodyPanelLayout.setHorizontalGroup(
+            bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 813, Short.MAX_VALUE)
         );
-        jpTreeViewLayout.setVerticalGroup(
-            jpTreeViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 508, Short.MAX_VALUE)
-        );
-
-        jPanel2.setName("jPanel2"); // NOI18N
-
-        tpView.setName("tpView"); // NOI18N
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tpView, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tpView, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+        bodyPanelLayout.setVerticalGroup(
+            bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 513, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -162,20 +192,16 @@ public class PlacementLogView extends FrameView {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jpTreeView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(10, 10, 10)
+                        .addComponent(bodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpTreeView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -206,24 +232,29 @@ public class PlacementLogView extends FrameView {
 
 private void btnAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewActionPerformed
     String df = DateFormat.getDateInstance().format(new Date());
-    tpView.add(df, new TabPanel(df));
-    ovc.addObject(new Date().toString(), tree, rootNode, treeModel);
-    
+    Entry e = new Entry();
+    jtView.add(df, new TabPanel(e));
+    ovc.addObject(df, tree, rootNode, treeModel);
+    entries.add(e);
 }//GEN-LAST:event_btnAddNewActionPerformed
 
+private void btnOrderByDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderByDateActionPerformed
+    ovc.orderByDate(tree, nodes);
+}//GEN-LAST:event_btnOrderByDateActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bodyPanel;
     private javax.swing.JButton btnAddNew;
+    private javax.swing.JButton btnOrderByDate;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton jButton5;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JPanel jpTreeView;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JTabbedPane tpView;
     // End of variables declaration//GEN-END:variables
 
     private JDialog aboutBox;
