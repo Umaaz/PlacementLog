@@ -1,9 +1,10 @@
 package placementlog.Core.Types;
 
+import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.Date;
 
-public class Entry {
+public class Entry implements Serializable {
     private String subject;
     private Date date;
     private String entry;

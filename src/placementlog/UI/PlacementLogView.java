@@ -4,6 +4,11 @@ import Placementlog.Core.ApplicationLoader;
 import Placementlog.Core.OverviewControl;
 import Placementlog.UI.TabPanel;
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +27,7 @@ import placementlog.Core.Types.Entry;
 /**
  * The application's main frame.
  */
-public class PlacementLogView extends FrameView {
+public class PlacementLogView extends FrameView implements WindowListener {
 
     private OverviewControl ovc = new OverviewControl();
     private DefaultMutableTreeNode rootNode;
@@ -38,6 +43,7 @@ public class PlacementLogView extends FrameView {
         super(app);
         initComponents();
         buildMonthList();
+        this.getFrame().addWindowListener(this);
         nodes = ApplicationLoader.load();
         rootNode = new DefaultMutableTreeNode("Entries");
         treeModel = new DefaultTreeModel(rootNode);
@@ -46,6 +52,7 @@ public class PlacementLogView extends FrameView {
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         tree.setShowsRootHandles(true);
         tree.setSize(239, 508);
+        tree.setBounds(0, 0, 239, 508);
         jtView = new JTabbedPane();
         bodyPanel.setLayout(new BorderLayout());
         bodyPanel.add("West",tree);
@@ -76,6 +83,8 @@ public class PlacementLogView extends FrameView {
         }
         PlacementLogApp.getApplication().show(aboutBox);
     }
+    
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -258,4 +267,57 @@ private void btnOrderByDateActionPerformed(java.awt.event.ActionEvent evt) {//GE
     // End of variables declaration//GEN-END:variables
 
     private JDialog aboutBox;
+
+    public void windowOpened(WindowEvent e) {
+        
+    }
+
+    public void windowClosing(WindowEvent e) {
+        FileOutputStream fos = null;
+        ObjectOutputStream out = null;
+        // TODO if file exists validation
+        try{
+            fos = new FileOutputStream("savefile");
+            out = new ObjectOutputStream(fos);
+            out.writeObject(entries);
+            out.close();
+            System.out.println("Success"); // Let us know we've reached the sequence
+            
+        } catch (IOException ex){
+            ex.printStackTrace(); // ignore warning
+        }
+    }
+
+    public void windowClosed(WindowEvent e) {
+        
+                  FileOutputStream fos = null;
+        ObjectOutputStream out = null;
+        // TODO if file exists validation
+        try{
+            fos = new FileOutputStream("savefile");
+            out = new ObjectOutputStream(fos);
+            out.writeObject(entries);
+            out.close();
+            System.out.println("Success"); // Let us know we've reached the sequence
+            
+        } catch (IOException ex){
+            ex.printStackTrace(); // ignore warning
+        }  
+    }
+
+    public void windowIconified(WindowEvent e) {
+        
+    }
+
+    public void windowDeiconified(WindowEvent e) {
+        
+    }
+
+    public void windowActivated(WindowEvent e) {
+        
+    }
+
+    public void windowDeactivated(WindowEvent e) {
+        
+    }
 }
