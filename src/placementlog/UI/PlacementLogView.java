@@ -22,6 +22,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
+import placementlog.Core.ApplicationSaver;
 import placementlog.Core.Types.Entry;
 
 /**
@@ -43,8 +44,8 @@ public class PlacementLogView extends FrameView implements WindowListener {
         super(app);
         initComponents();
         buildMonthList();
+        entries = ApplicationLoader.load();
         this.getFrame().addWindowListener(this);
-        nodes = ApplicationLoader.load();
         rootNode = new DefaultMutableTreeNode("Entries");
         treeModel = new DefaultTreeModel(rootNode);
         tree = new JTree(treeModel);
@@ -273,36 +274,11 @@ private void btnOrderByDateActionPerformed(java.awt.event.ActionEvent evt) {//GE
     }
 
     public void windowClosing(WindowEvent e) {
-        FileOutputStream fos = null;
-        ObjectOutputStream out = null;
-        // TODO if file exists validation
-        try{
-            fos = new FileOutputStream("savefile");
-            out = new ObjectOutputStream(fos);
-            out.writeObject(entries);
-            out.close();
-            System.out.println("Success"); // Let us know we've reached the sequence
-            
-        } catch (IOException ex){
-            ex.printStackTrace(); // ignore warning
-        }
+        ApplicationSaver.save(entries);
     }
 
     public void windowClosed(WindowEvent e) {
-        
-                  FileOutputStream fos = null;
-        ObjectOutputStream out = null;
-        // TODO if file exists validation
-        try{
-            fos = new FileOutputStream("savefile");
-            out = new ObjectOutputStream(fos);
-            out.writeObject(entries);
-            out.close();
-            System.out.println("Success"); // Let us know we've reached the sequence
-            
-        } catch (IOException ex){
-            ex.printStackTrace(); // ignore warning
-        }  
+        ApplicationSaver.save(entries);
     }
 
     public void windowIconified(WindowEvent e) {
